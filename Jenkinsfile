@@ -1,9 +1,9 @@
 pipeline{
-    envoronment{
-        Project-URL = "https://github.com/RahulAggarwal-DevOps/node-todo-cicd.git"
+    environment{
+        Project_URL = "https://github.com/RahulAggarwal-DevOps/node-todo-cicd.git"
         Image = "node-app"
         Tag = "latest"
-        SQ-SCANNER = tool "sonar"
+        SQ_SCANNER = tool "sonar"
     }
     agent{
         node{
@@ -14,13 +14,13 @@ pipeline{
         stage("Code Clone"){
             steps{
                 echo "Clone the code"
-                git url: ${project-URL}, branch: "master"
+                git url: "${Project_URL}", branch: "master"
             }
         }
         stage("Analyse the code with SonarQube"){
             steps{
                 withSonarQubeEnv("sonar"){
-                    sh "${SQ-SCANNER}/bin/sonar-scanner -Dsonar.projectName=NodeToDoProject" -Dsonar.projectKey=NodeToDoProject -X"
+                    sh "${SQ_SCANNER}/bin/sonar-scanner -Dsonar.projectName=NodeToDoProject -Dsonar.projectKey=NodeToDoProject -X"
                 }
             }
         }
@@ -61,7 +61,8 @@ pipeline{
         }
         stage("Deploy the Application"){
             steps{
-                sh "docker compose down && docker compose up -d --build"
+                sh "docker compose down"
+                sh "docker compose up -d --build"
             }
         }
     }
