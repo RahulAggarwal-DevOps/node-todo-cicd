@@ -39,6 +39,7 @@ pipeline{
         }
         stage("Code Build & Test with Docker"){
             steps{
+                sh "whoami"
                 sh "docker build -t ${Image}:${Tag} ."
             }
         }
