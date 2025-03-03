@@ -13,7 +13,7 @@ pipeline{
     stages{
         stage("Code Clone"){
             steps{
-                echo "Clone the code"
+                echo "Clone the code "
                 git url: "${Project_URL}", branch: "master"
             }
         }
